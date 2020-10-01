@@ -17,5 +17,13 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    function showTabContent(i = 0) { // Показываем нужные вкладки
+        tabsContent[i].style.display = 'block';
+        tabs[i].classList.add('tabheader__item_active');
+    }
+
+
+    hideTabContent();
+    showTabContent(); // Итог: создали две функции чтобы скрывать ненужные вкладки и показывать дефолтную Фитнес
 
 });
