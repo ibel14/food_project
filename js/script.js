@@ -9,7 +9,8 @@ window.addEventListener('DOMContentLoaded', () => {
     
     function hideTabContent() { // Скрываем ненужные вкладки
         tabsContent.forEach(item => { // Перебираем каждый контент отдельно через форич
-            item.style.display = 'none'; // Скрыли весь контент которые есть на сайте
+            item.classList.add('hide'); // Скрыли весь контент которые есть на сайте
+            item.classList.remove('show', 'fade');
         }); // Эта функция занимается только скрытием вкладок (табов)
 
         tabs.forEach(item => {
@@ -18,7 +19,8 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     function showTabContent(i = 0) { // Показываем нужные вкладки
-        tabsContent[i].style.display = 'block';
+        tabsContent[i].classList.add('show', 'fade');
+        tabsContent[i].classList.remove('hide');
         tabs[i].classList.add('tabheader__item_active');
     }
 
