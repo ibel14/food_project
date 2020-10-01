@@ -26,4 +26,20 @@ window.addEventListener('DOMContentLoaded', () => {
     hideTabContent();
     showTabContent(); // Итог: создали две функции чтобы скрывать ненужные вкладки и показывать дефолтную Фитнес
 
+
+    // Создаем делегирование событий, назначаем обработчик событий клика
+
+    tabsParent.addEventListener('click', (event) => { // создаем колбек, добавляем объект событие event
+        const target = event.target; // создали переменную для скоращения event.target
+
+        if (target && target.classList.contains('tabheader__item')) { // C помощью контейнс будет точно определять 
+          tabs.forEach((item, i) => { // что мы кликнули в таб чтобы не кликать в родителя (в пустое место)
+            if (target == item) {
+                hideTabContent();
+                showTabContent(i);
+            }
+        });
+    }
+    });
+
 });
