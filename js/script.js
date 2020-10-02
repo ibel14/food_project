@@ -1,47 +1,42 @@
 "use strict";
 
 window.addEventListener('DOMContentLoaded', () => {
-                                    // Создал переменные под каждую вкладку
-    const tabs = document.querySelectorAll('.tabheader__item'), // Каждая вкладка
-          tabsContent = document.querySelectorAll('.tabcontent'), // Описание вкладок
-          tabsParent = document.querySelector('.tabheader__items'); // Отвечает за весь блок вкладок
+    const tabs = document.querySelectorAll('.tabheader__item'),
+          tabsContent = document.querySelectorAll('.tabcontent'),
+          tabParent = document.querySelector('.tabheader__items');
 
-    
-    function hideTabContent() { // Скрываем ненужные вкладки
-        tabsContent.forEach(item => { // Перебираем каждый контент отдельно через форич
-            item.classList.add('hide'); // Скрыли весь контент которые есть на сайте
+
+    function hideTabContent() {
+        tabsContent.forEach(item => {
+            item.classList.add('hide');
             item.classList.remove('show', 'fade');
-        }); // Эта функция занимается только скрытием вкладок (табов)
+        });
 
         tabs.forEach(item => {
             item.classList.remove('tabheader__item_active');
         });
     }
 
-    function showTabContent(i = 0) { // Показываем нужные вкладки
+    function showTabContent(i = 0) {
         tabsContent[i].classList.add('show', 'fade');
         tabsContent[i].classList.remove('hide');
         tabs[i].classList.add('tabheader__item_active');
     }
 
-
     hideTabContent();
-    showTabContent(); // Итог: создали две функции чтобы скрывать ненужные вкладки и показывать дефолтную Фитнес
+    showTabContent();
 
+    tabParent.addEventListener('click', (event) => {
+        const target = event.target;
 
-    // Создаем делегирование событий, назначаем обработчик событий клика
-
-    tabsParent.addEventListener('click', (event) => { // создаем колбек, добавляем объект событие event
-        const target = event.target; // создали переменную для скоращения event.target
-
-        if (target && target.classList.contains('tabheader__item')) { // C помощью контейнс будет точно определять 
-          tabs.forEach((item, i) => { // что мы кликнули в таб чтобы не кликать в родителя (в пустое место)
-            if (target == item) {
-                hideTabContent();
-                showTabContent(i);
-            }
-        });
-    }
+        if (target && target.classList.contains('tabheader__item')) {
+            tabs.forEach((item, i) => {
+                if (target == item) {
+                    hideTabContent();
+                    showTabContent(i);
+                }
+            });
+        }
     });
 
 });
