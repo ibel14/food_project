@@ -44,4 +44,58 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     });
 
+    const deadline = '2020-10-11'; // Создали дедлайн и поместили туда дату дедлайна
+
+    function getTimeRemaining(endtime) { // Создаем функцию под дедлайн
+        const t = Date.parse(endtime) - Date.parse(new Date()), // когда функция запускается мы в эту переменную t
+        // получим разницу в миллисекундах
+              days = Math.floor(t / (1000 * 60 * 60 * 24)), // Match.floor используем для округления
+              hours = Math.floor((t / (1000 * 60 * 60) % 24)), // Операции рассчитывающие оставшиеся время
+              minutes = Math.floor((t / 1000 / 60) % 60), // Операции рассчитывающие оставшиеся время
+              seconds = Math.floor((t / 1000) % 60); // Операции рассчитывающие оставшиеся время внутри этой функции
+
+            return {
+                'total': t,
+                'days': days,
+                'hours': hours,
+                'minutes': minutes,
+                'seconds': seconds
+            };
+        }
+
+        function getZero(num) { // Создали функцию с условием, чтобы у цифр от 1 до 9 был 0 вначале
+            if (num >= 0 && num < 10) { // Далее поместили эту функцию в updateClock
+                return `0${num}`;
+            } else {
+                return num;
+            }
+        }
+
+        function setClock(selector, endtime) {
+            const timer = document.querySelector(selector),
+                  days = timer.querySelector('#days'),
+                  hours = timer.querySelector('#hours'),
+                  minutes = timer.querySelector('#minutes'),
+                  seconds = timer.querySelector('#seconds'),
+                  timeInterval = setInterval(updateClock, 1000);
+
+            updateClock(); // Вызвали функцию для корректного отображения таймера
+
+            function updateClock() {
+                const t = getTimeRemaining(endtime);
+
+                days.innerHTML = getZero(t.days);
+                hours.innerHTML = getZero(t.hours);
+                minutes.innerHTML = getZero(t.minutes);
+                seconds.innerHTML = getZero(t.seconds);
+
+                if (t.total <= 0) {
+                    clearInterval(timeInterval);
+                }
+            }
+
+        }
+
+        setClock('.timer', deadline);
+
 });
