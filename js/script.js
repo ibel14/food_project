@@ -110,8 +110,60 @@ window.addEventListener('DOMContentLoaded', () => {
     // разобрать подробно тему с data-modal, data-close. то что я прописал сейчас в классах в HTML
 
 
-    const modalTrigger = document.querySelector('[data-modal]'),
+    const modalTrigger = document.querySelectorAll('[data-modal]'),
           modal = document.querySelector('.modal'),
           modalCloseBtn = document.querySelector('[data-close]');
+
+    // Первый вариант
+
+    modalTrigger.forEach(btn => {
+        btn.addEventListener('click', () => { // Повесили клик на кнопку, открывается окно
+            modal.classList.add('show'); 
+            modal.classList.remove('hide');
+            document.body.style.overflow = 'hidden'; // Отключили скролл по сайту при открытом окне
+    
+        });
+    });
+    
+    function closeModal() {
+        modal.classList.add('hide');
+        modal.classList.remove('show'); // При закрытии окна скролл на сайте опять включили
+        document.body.style.overflow = '';
+    }
+
+    modalCloseBtn.addEventListener('click', closeModal);
+
+    // Второй вариант с помощью toggle
+
+//     modalTrigger.addEventListener('click', () => { // Повесили клик на кнопку, открывается окно
+//         modal.classList.toggle('show'); // Если такого класса нет то мы его покажем
+//         document.body.style.overflow = 'hidden'; // Отключили скролл по сайту при открытом окне
+
+//     });
+
+//     modalCloseBtn.addEventListener('click', () => { // Повесили клик на конпку, закрывается окно
+//         modal.classList.toggle('show');
+//         document.body.style.overflow = ''; // При закрытии окна скролл на сайте опять включили
+
+//     });
+
+
+    // При нажатии на пустое место (вне окна) закрывается окно
+    // Чтобы не повторять код внутри условия 
+            // modal.classList.add('hide');
+            // modal.classList.remove('show');
+            // document.body.style.overflow = '';, выше создал отдельную функцию
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal(); // Заменили код на функцию, которую обязательно вызываем
+        }
+    });
+
+    document.addEventListener('keydown', (e) => { // При нажатии на кнопку Esc окно будет закрываться
+        if (e.code === "Escape" && modal.classList.contains('show')) { // после && добавили условие чтобы
+            closeModal(); // без окна Esc не срабатывал
+        }
+    });
 
 });
