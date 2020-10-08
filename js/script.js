@@ -44,22 +44,16 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // Timer
 
-    const deadline = '2020-10-10'; // Создали дедлайн
+    const deadline = '2020-10-10';
 
-    // Получаем разницу между датами с помощью функции
-    function getTimeRemaining(endtime) { // Создаем переменную внутри функции
-        const t = Date.parse(endtime) - Date.parse(new Date()), // когда функция запускается
-        // мы получим разницу в миллисекундах
-              days = Math.floor(t / (1000 * 60 * 60 * 24)), // 1000 миллисекунд умножаем на 60, получаем колл
-        // млсек в одной минуте умножаем еще на 60 и получаем млсек в одном часе и умножаем на 24 часа,
-        // получаем млсек в сутках
-        // Math.floor - это округление до целого
-              hours = Math.floor(t / (1000 * 60 * 60) % 24), // такая же логика, только добавляем еще остаток
+    function getTimeRemaining(endtime) {
+        const t = Date.parse(endtime) - Date.parse(new Date()),
+              days = Math.floor(t / (1000 * 60 * 60 * 24)),
+              hours = Math.floor(t / (1000 * 60 * 60) % 24),
               minutes = Math.floor((t / 1000 / 60) % 60),
-              seconds = Math.floor((t / 1000) % 60); // Теперь есть операции которые рассчитывают оставшееся время
-              // чтобы использовать эти переменные не только внутри, буду использовать return
+              seconds = Math.floor((t / 1000) % 60);
         
-        return { // создаем объект для использования переменных вне одной функции
+        return {
             'total': t,
             'days': days,
             'hours': hours,
@@ -75,8 +69,6 @@ window.addEventListener('DOMContentLoaded', () => {
             return num;
         }
     }
-
-    // Пишу функцию для того чтобы таймер отображался на странице
 
     function setClock(selector, endtime) {
         const timer = document.querySelector(selector),
@@ -107,62 +99,37 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // Modal
 
-    // разобрать подробно тему с data-modal, data-close. то что я прописал сейчас в классах в HTML
-
-
     const modalTrigger = document.querySelectorAll('[data-modal]'),
           modal = document.querySelector('.modal'),
           modalCloseBtn = document.querySelector('[data-close]');
 
-    // Первый вариант
 
     modalTrigger.forEach(btn => {
-        btn.addEventListener('click', () => { // Повесили клик на кнопку, открывается окно
+        btn.addEventListener('click', () => { 
             modal.classList.add('show'); 
             modal.classList.remove('hide');
-            document.body.style.overflow = 'hidden'; // Отключили скролл по сайту при открытом окне
+            document.body.style.overflow = 'hidden';
     
         });
     });
     
     function closeModal() {
         modal.classList.add('hide');
-        modal.classList.remove('show'); // При закрытии окна скролл на сайте опять включили
+        modal.classList.remove('show'); 
         document.body.style.overflow = '';
     }
 
     modalCloseBtn.addEventListener('click', closeModal);
 
-    // Второй вариант с помощью toggle
-
-//     modalTrigger.addEventListener('click', () => { // Повесили клик на кнопку, открывается окно
-//         modal.classList.toggle('show'); // Если такого класса нет то мы его покажем
-//         document.body.style.overflow = 'hidden'; // Отключили скролл по сайту при открытом окне
-
-//     });
-
-//     modalCloseBtn.addEventListener('click', () => { // Повесили клик на конпку, закрывается окно
-//         modal.classList.toggle('show');
-//         document.body.style.overflow = ''; // При закрытии окна скролл на сайте опять включили
-
-//     });
-
-
-    // При нажатии на пустое место (вне окна) закрывается окно
-    // Чтобы не повторять код внутри условия 
-            // modal.classList.add('hide');
-            // modal.classList.remove('show');
-            // document.body.style.overflow = '';, выше создал отдельную функцию
-
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
-            closeModal(); // Заменили код на функцию, которую обязательно вызываем
+            closeModal();
         }
     });
 
-    document.addEventListener('keydown', (e) => { // При нажатии на кнопку Esc окно будет закрываться
-        if (e.code === "Escape" && modal.classList.contains('show')) { // после && добавили условие чтобы
-            closeModal(); // без окна Esc не срабатывал
+    document.addEventListener('keydown', (e) => {
+        if (e.code === "Escape" && modal.classList.contains('show')) {
+            closeModal();
         }
     });
 
