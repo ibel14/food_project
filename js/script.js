@@ -108,6 +108,8 @@ window.addEventListener('DOMContentLoaded', () => {
             modal.classList.add('show'); 
             modal.classList.remove('hide');
             document.body.style.overflow = 'hidden';
+            setInterval(modalTimerId); // Если пользователь сам открыл окно, то мы отчищаем интервал
+            // чтобы окно опять самостоятельно не открылось
     }
 
     modalTrigger.forEach(btn => {
@@ -135,5 +137,14 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     const modalTimerId = setTimeout(openModal, 3000); // Поставили таймер чтобы окно через 3сек появлялось само
+
+    function showModalByScroll() { // Создал функцию и перенес весь код из window....(scroll)
+        if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+            openModal();
+            window.removeEventListener('scroll', showModalByScroll); // после первого полного скролла, в след раз
+        } // модальное окно не вылезет благодаря removeEventListener
+    }
+
+    window.addEventListener('scroll', showModalByScroll); // Как пользователь доскролит страницу до конца - вылазит окно
 
 });
