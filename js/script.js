@@ -103,4 +103,15 @@ window.addEventListener('DOMContentLoaded', () => {
 
     setClock('.timer', deadline);
 
+
+
+    // Modal
+
+    // разобрать подробно тему с data-modal, data-close. то что я прописал сейчас в классах в HTML
+
+
+    const modalTrigger = document.querySelector('[data-modal]'),
+          modal = document.querySelector('.modal'),
+          modalCloseBtn = document.querySelector('[data-close]');
+
 });
