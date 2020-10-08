@@ -104,13 +104,14 @@ window.addEventListener('DOMContentLoaded', () => {
           modalCloseBtn = document.querySelector('[data-close]');
 
 
-    modalTrigger.forEach(btn => {
-        btn.addEventListener('click', () => { 
+    function openModal() { // Создали функцию, чтобы не дублировать код
             modal.classList.add('show'); 
             modal.classList.remove('hide');
             document.body.style.overflow = 'hidden';
-    
-        });
+    }
+
+    modalTrigger.forEach(btn => {
+        btn.addEventListener('click', openModal); // Вынесли код отсюда в функцию openModal
     });
     
     function closeModal() {
@@ -132,5 +133,7 @@ window.addEventListener('DOMContentLoaded', () => {
             closeModal();
         }
     });
+
+    const modalTimerId = setTimeout(openModal, 3000); // Поставили таймер чтобы окно через 3сек появлялось само
 
 });
