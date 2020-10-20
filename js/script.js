@@ -165,6 +165,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
         changeToRub() {
             this.price = this.price * this.transfer;
+        }
 
         render() {
             const element = document.createElement('div');
@@ -184,10 +185,10 @@ window.addEventListener('DOMContentLoaded', () => {
         <div class="menu__item-price">
             <div class="menu__item-cost">Цена:</div>
             <div class="menu__item-total"><span>${this.price}</span> грн/день</div>
-    `;
-    this.parent.append(element);
-            
-}
+        `;
+            this.parent.append(element);
+            }
+        }
 
 new MenuCard(
     'img/tabs/vegy.jpg',
