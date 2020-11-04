@@ -235,13 +235,13 @@ new MenuCard(
         form.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            const statusMessasge = document.createElement('img');
-            statusMessasge.src = message.loading;
-            statusMessasge.style.cssText = `
+            const statusMessage = document.createElement('img');
+            statusMessage.src = message.loading;
+            statusMessage.style.cssText = `
                 display: block;
                 margin: 0 auto;
             `;
-            form.insertAdjacentElement('afterend', 'statusMessage');
+            form.insertAdjacentElement('afterend', statusMessage);
 
             const request = new XMLHttpRequest();
             request.open('POST', 'server.php'); 
@@ -263,7 +263,7 @@ new MenuCard(
                     console.log(request.response);
                     showThanksModal(message.success);
                     form.reset();
-                    statusMessasge.remove();
+                    statusMessage.remove();
                 } else {
                     showThanksModal(message.failure);
                 }
