@@ -44,7 +44,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // Timer
 
-    const deadline = '2020-10-10';
+    const deadline = '2020-12-12';
 
     function getTimeRemaining(endtime) {
         const t = Date.parse(endtime) - Date.parse(new Date()),
@@ -133,7 +133,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    const modalTimerId = setTimeout(openModal, 3000); // Поставили таймер чтобы окно через 3сек появлялось само
+    const modalTimerId = setTimeout(openModal, 500000); // Поставили таймер чтобы окно через 3сек появлялось само
 
     function showModalByScroll() { // Создал функцию и перенес весь код из window....(scroll)
         if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
@@ -222,7 +222,7 @@ new MenuCard(
     const forms = document.querySelectorAll('form');
 
     const message = {
-        loading: 'Загрузка',
+        loading: 'img/form/spinner.svg',
         success: 'Спасибо, скоро мы с вами свяжемся',
         failure: 'Что-то пошло не так...'
     };
@@ -235,10 +235,13 @@ new MenuCard(
         form.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            const statusMessasge = document.createElement('div');
-            statusMessasge.classList.add('status');
-            statusMessasge.textContent = message.loading;
-            form.append(statusMessasge);
+            const statusMessasge = document.createElement('img');
+            statusMessasge.src = message.loading;
+            statusMessasge.style.cssText = `
+                display: block;
+                margin: 0 auto;
+            `;
+            form.insertAdjacentElement('afterend', 'statusMessage');
 
             const request = new XMLHttpRequest();
             request.open('POST', 'server.php'); 
@@ -258,13 +261,11 @@ new MenuCard(
             request.addEventListener('load', () => {
                 if (request.status === 200) {
                     console.log(request.response);
-                    statusMessasge.textContent = message.success;
+                    showThanksModal(message.success);
                     form.reset();
-                    setTimeout(() => {
-                        statusMessasge.remove();
-                    }, 2000);
+                    statusMessasge.remove();
                 } else {
-                    statusMessasge.textContent = message.failure;
+                    showThanksModal(message.failure);
                 }
             });
         });
